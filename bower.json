@@ -20,13 +20,14 @@
   "ignore": [
     "**/.*",
     "bower_components",
-    "gulp"
+    "gulp",
     "index.html",
     "node_modules",
     "test",
     "tests"
   ],
   "dependencies": {
-    "angularjs": "~1.3.8"
+    "angularjs": "~1.3.8",
+    "lodash": "~2.4.1"
   }
 }

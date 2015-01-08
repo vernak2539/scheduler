@@ -1,8 +1,135 @@
-.scheduler {
-    // following is just testing
-    color: #000;
+$user-select(val) {
+    -webkit-user-select: val;
+    -khtml-user-select: val;
+    -moz-user-select: val;
+    -o-user-select: val;
+    user-select: val;
+}
 
-    .something-inside-schedler {
-        background: #efefef;
+.scheduler {
+
+    .day {
+        width: 4%;
+        padding-right: 10px;
+        line-height: 13px;
+        text-align: right;
+    }
+
+    .schedule-hour {
+        width: 4%;
+        height: 30px;
+        border: solid 1px #dddddd;
+        background-color: white;
+        cursor: pointer;
+        $user-select(none);
+
+        &:active {
+            cursor: pointer;
+        }
+
+        &.active {
+            background-color: #88dd66;
+        }
+
+        &.inactive {
+            background-color: #eee;
+        }
+
+        &:hover {
+            background-color: #fff;
+        }
+    }
+}
+
+
+.scheduler {
+    table {
+        display: table;
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 2px;
+        border-color: $softgrey;
+        margin-bottom: 20px;
+
+        td {
+            $user-select(none);
+
+            .hour {
+                position: relative;
+                left: -12px;
+                width: 22px;
+
+                &.plus-one {
+                    left: 25px;
+                }
+
+                &.hour-spacer {
+                    width: 22px;
+                }
+            }
+        }
+    }
+}
+
+.tooltip {
+    display: block;
+    position: relative;
+    width: 100%;
+    min-width: 20px;
+    max-width: 30px;
+    height: 25px;
+    z-index: 2;
+    color: #000000;
+
+    span {
+        display: none;
+
+        &.classic  {
+            padding: 0.5em 0.5em;
+            background: #FFFFAA;
+        }
+    }
+
+    &:hover  {
+        width: auto;
+        border-bottom: none;
+
+        span {
+            display: block;
+            position: absolute;
+            z-index: 2;
+            left: 1em;
+            top: 2em;
+            width: 80px;
+            height: 40px;
+            margin-left: 0;
+            font-size: 12px;
+            line-height: 12px;
+        }
+    }
+}
+
+.scheduler {
+    tr {
+        td {
+            &:last-child {
+                .tooltip {
+                    &:hover {
+                        span {
+                            &:first-child {
+                                left: -50px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.unselectable {
+    a {
+        $user-select(none);
+        cursor: pointer;
     }
 }

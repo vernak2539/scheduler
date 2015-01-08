@@ -3,11 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <title>Social.com Scheduler</title>
+    <link rel="stylesheet" href="./src/css/scheduler.css">
 </head>
-<body>
+<body ng-app="scheduler">
     <h1>Will be where all the testing, examples, and markup go</h1>
 
+    <div class="scheduler" data-bindonce="texts" sdc-scheduler>
+        <div id="campaign-scheduler">
+            <table data-ng-mouseup="onMouseUp()" data-ng-mouseleave="onMouseLeave()">
+                <tr>
+                    <td></td>
+                    <td class="unselectable" data-ng-repeat="hour in hoursObjTemplate">
+                        <div data-ng-class-even="'hourSpacer'" data-ng-class-odd="'hour'">
+                            <small data-ng-show="($index) % 2 == 0">
+                                <span data-bo-text="hour.hour">{{hour.hour}}</span>:00
+                            </small>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr data-ng-repeat="day in scheduleModel.days" data-ng-model="Days">
+                    <td class="day unselectable">
+                        <small><strong data-bo-text="day.name">{{day.name}}</strong></small>
+                        <small>
+                            [<a data-ng-click="setAllHoursForDayActive(day)"
+                            title="Run campaign every {{ day.name }}">all</a>]&nbsp;&nbsp;[<a data-ng-click="setAllHoursForDayInactive(day)"
+                            title="Pause campaign every {{ day.name }}">none</a>]
+                        </small>
+                    </td>
+                    <td data-ng-repeat="hour in day.hours" class="schedule-hour {{ getDataSchedule(day.name, hour.hourOfDay) }}"
+                        data-ng-class="hour.active ? 'active' : 'inactive'" data-ng-mousedown="onMouseDown(hour)"
+                        data-ng-mouseover="onMouseOver(hour)">
+                        <a class="tooltip">
+                            <span class="classic">
+                                <strong data-bo-text="day.name">{{day.name}}</strong>
+                                <br />
+                                <span data-bo-text="hour.hourOfDay">{{hour.hourOfDay}}:00</span>
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td class="unselectable" data-ng-repeat="hour in hoursObjTemplate" data-ng-show="!$first">
+                        <div data-ng-class-even="'hour plus-one'" data-ng-class-odd="'hour-spacer'">
+                            <small data-ng-show="($index) % 2 != 0">
+                                <span data-bo-text="hour.hour">{{hour.hour}}</span>:00
+                            </small>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="unselectable">
+                    <td></td>
+                    <td colspan="2">
+                        <strong>Key:</strong>
+                    </td>
+                    <td class="schedule-hour active ignore"></td>
+                    <td colspan="3">&nbsp;Active</td>
+                    <td class="schedule-hour inactive ignore"></td>
+                    <td colspan="3">&nbsp;Paused</td>
+                    <td colspan="14">&nbsp;</td>
+                </tr>
+            </table>
+            <!--div class="timezone" data-ng-if="!staticTimezone">
+                <label>Please select the timezone for the schedule above</label>
+                <div data-sb-timezone data-timezone="schedule.timezone"></div>
+            </div>
+            <div class="timezone" data-ng-if="staticTimezone">
+                <label>Timezone: {{ schedule.timezone.name }}</label>
+            </div-->
+        </div>
+    </div>
+
     <script src="./bower_components/angularjs/angular.js"></script>
-    <script src="./scheduler.js"></script>
+    <script src="./bower_components/lodash/dist/lodash.js"></script>
+    <script src="./src/js/scheduler.js"></script>
+    <script>
+        angular.module( 'scheduler', [ 'sdc.scheduler' ] );
+    </script>
 </body>
 </html>
